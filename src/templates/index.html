@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskmaster </title>
+</head>
+<body>
+    <h1>TaskMaster</h1>
+    <div>
+        <form action="{{ url_for('add') }}" method="post">
+            <label for="taskInput">Add a new task : </label>
+            <input type="text" name="taskInput" autofocus required>
+            <input type="datetime-local" name="taskDeadLine">
+            <input type="submit" value="Add Item">
+        </form>
+    </div>
+    <div>
+        <form action="{{ url_for('update') }}" method="post">
+            <h3>Incomplete Tasks</h3>
+            <ul style="list-style-type: none;">
+                {% for task in incomplete %}
+                <li><input type="checkbox" name="updateCheck" value="{{ task.id }}">{{ task.text }} {% if task.deadline != None %} {{ task.deadline }} {% endif %}</li>
+                {% endfor %}
+            </ul>
+            <input type="submit" value="Update">
+        </form>
+        {% if complete != [] %}
+            <h3>Completed Tasks</h3>
+            <ul>
+                {% for task in complete %}
+                <li>{{ task.text }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
